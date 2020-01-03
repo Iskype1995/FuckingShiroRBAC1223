@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/FuckingShiroRBAC1223/static/css/layui.css" />
+    <script type="text/javascript" src="http://localhost:8080/FuckingShiroRBAC1223/static/js/jquery.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/FuckingShiroRBAC1223/static/layui.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <center><h1><font color="red">FUCKING REGISTER</font> </h1></center>
+    <center>
+        <form class="layui-form" action="/FuckingShiroRBAC1223/user/registerDeal" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="uAccount" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="uPassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">。</div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">立即注册</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </center>
+</body>
+</html>

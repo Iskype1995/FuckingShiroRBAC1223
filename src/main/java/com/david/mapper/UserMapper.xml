@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.david.mapper.UserMapper">
+
+  <select id="findUserByUsername" parameterType="java.lang.String" resultMap="findUserByUsernameMap">
+    select u.*, r.*, p.* from user u left join user_role ur on u.u_id = ur.u_id
+                            left join role r on ur.r_id = r.r_id
+                            left join role_permission rp on r.r_id = rp.r_id
+                            left join permission p on rp.p_id = p.p_id
+                            where u.u_account = #{username}
+  </select>
+
+  <resultMap id="findUserByUsernameMap" type="com.david.entity.User">
+    <id column="u_id" property="uId" />
+    <result column="u_name" property="uName" />
+    <result column="u_account" property="uAccount" />
+    <result column="u_password" property="uPassword" />
+    <result column="u_info" property="uInfo" />
+    <result column="salt" property="salt" />
+    <collection property="roles" ofType="com.david.entity.Role">
+      <id column="r_id" property="rId" />
+      <result column="r_name" property="rName" />
+      <result column="r_info" property="rInfo" />
+      <collection property="permissions" ofType="com.david.entity.Permission">
+        <id column="p_id" property="pId" />
+        <result column="p_name" property="pName" />
+        <result column="p_action" property="pAction" />
+        <result column="p_info" property="pInfo" />
+    </collection>
+  </collection>
+  </resultMap>
+
+</mapper>

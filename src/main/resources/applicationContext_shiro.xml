@@ -1,0 +1,72 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- shiro相关！ filter对象 必须交web.xml过滤器的命名 -->
+
+    <bean id="matcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="MD5" />
+        <property name="hashIterations" value="10" />
+    </bean>
+
+    <bean id="realm" class="com.david.realm.CustomSSMAuthorizingRealm">
+        <property name="credentialsMatcher" ref="matcher" />
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="realm" />
+    </bean>
+
+    <!-- 自定义过滤-->
+    <bean id="roRoles" class="com.david.filter.CustomFilter" />
+
+    <!-- id必须要交 web.xml命名-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 设置安全管理器 -->
+        <property name="securityManager" ref="securityManager" />
+
+
+        <!-- 设置登录页面 有一个路径需要认证，但是你没有认证 跳转到登录页面！-->
+        <property name="loginUrl" value="/jump/loginUI" />
+        <!-- 设置没有权限后跳转的页面   页面需要某一个授权，没有，跳转到指定的页面！-->
+        <property name="unauthorizedUrl" value="/permission/403" />
+
+        <property name="filters">
+            <map>
+                <!-- 自定义的别名-->
+                <entry key="orr" value-ref="roRoles" />
+            </map>
+        </property>
+
+
+        <!-- 设置过滤器链 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 从上向下依次匹配 -->
+                <!-- ？一个字符串 * 一个层次n个字符换 ** 任意层次任意字符
+
+                        /user?=roles[警察]
+                        /product/*=perms[商品管理]
+                        /**=authc 所有路径都需要登录
+
+                        anon   匿名路径  未认证可以访问
+                        authc  认证路径  必须认证以后可以访问
+                        roles[‘角色’] 角色路径  必须拥有[juese]才可以访问
+                        perms[‘权限’] 权限路径 必须拥有[权限才可以访问]
+
+                        /js/**=anno
+                        /**=authc
+
+                        匹配原则：从上到下！符合一个就可以放行！不符合向下查找！
+                        转发不触发过滤器！
+                 -->
+                /= anon
+                /** = anon
+
+            </value>
+        </property>
+    </bean>
+
+
+</beans>

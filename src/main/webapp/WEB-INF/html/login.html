@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/FuckingShiroRBAC1223/static/css/layui.css" />
+    <script type="text/javascript" src="http://localhost:8080/FuckingShiroRBAC1223/static/js/jquery.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/FuckingShiroRBAC1223/static/layui.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+    <body>
+        <center><h1><font color="red">FUCK CODING</font> </h1></center>
+        <center><h1><font color="red">肏日编程</font> </h1></center>
+
+        <center>
+            <form id="loginDealForm" action="http://localhost:8080/FuckingShiroRBAC1223/user/loginDeal" method="post" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                        <input id="uAccount" type="text" name="uAccount" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input id="uPassword" type="password" name="uPassword" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">。</div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button id="loginDeal" type="button" class="layui-btn layui-btn-normal">立即登录</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <a href="/FuckingShiroRBAC1223/jump/registerUI">没有账号？请点击注册！</a>
+                    </div>
+                </div>
+            </form>
+
+        </center>
+
+    </body>
+
+    <script type="text/javascript">
+        //ajax代替form进行登录
+        $("#loginDeal").click(function(){
+            var uAccount = $("#uAccount").val();
+            var uPassword = $("#uPassword").val();
+            $.ajax({
+                url:"http://localhost:8080/FuckingShiroRBAC1223/user/loginDeal",
+                type:"POST",
+                data:"uAccount="+uAccount+"&&uPassword="+uPassword,
+                dataType:"json",
+                success:function(result){
+                    if(result.code == 200){
+                        alert("认证成功！ 转到用户详情页面");
+                        location.href="http://localhost:8080/FuckingShiroRBAC1223/jump/infoUI";
+                    }
+                    if(result.code == 401){
+                        alert("认证失败！ 请重新登录");
+                    }
+                },
+                error:function () {
+                    alert("连接失败");
+                }
+            });
+        });
+    </script>
+
+</html>

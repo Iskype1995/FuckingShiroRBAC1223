@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- mybatis的配置文件了-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- FULL 全映射 单表查询映射，多表查询映射 PARTIAL 半自动映射
+        单个表查询映射 嵌套查询（多表查询不管） NONE 不映射 全部手动写-->
+    </settings>
+    <!--  自定义类起别名-->
+    <typeAliases>
+        <!--        找到实体类文件全路径-->
+        <package name="com.david.entity"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+
+</configuration>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息页</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/FuckingShiroRBAC1223/static/css/layui.css" />
+    <script type="text/javascript" src="http://localhost:8080/FuckingShiroRBAC1223/static/js/jquery.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/FuckingShiroRBAC1223/static/layui.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <center><h1>信息</h1></center>
+    <center>
+        <span id="uAccount"></span>
+    </center>
+</body>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#username").text("未查询到用户名");
+            $.ajax({
+                url:"http://localhost:8080/FuckingShiroRBAC1223/user/infoMsg",
+                type:"GET",
+                data:"",
+                dataType:"json",
+                success:function(result){
+                    if(result.code == 200){
+                        $("#username").text(result.user.uName);
+                    }else{
+                        alert("用户信息错误。")
+                    }
+                },
+                error:function () {
+                    alert("获取用户信息失败");
+                }
+            });
+        })
+    </script>
+</html>
